@@ -10,6 +10,7 @@ ARG PKG="grafana-reporter"
 ARG SRC="github.com/IzakMarais/reporter/cmd/grafana-reporter"
 ARG GO_VER="1.16.7"
 ARG GO_SRC="https://golang.org/dl/go${GO_VER}.${OS}-${ARCH}.tar.gz"
+ARG TEX_SRC="https://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz"
 ARG UID="root"
 
 #
@@ -27,17 +28,12 @@ ENV GOROOT="/usr/local/go"
 ENV GOPATH="/go"
 ENV PATH="${PATH}:${GOROOT}/bin"
 
-WORKDIR "${GOROOT}"
-
 #
 # Install the requisite packages for the build
 #
 RUN yum -y update && \
     yum -y install \
         git \
-        texlive \
-        texlive-luatex \
-        texlive-xetex  \
         perl-Tk \
         perl-Digest-MD5
 
@@ -46,23 +42,27 @@ RUN yum -y update && \
 #
 RUN curl -L "${GO_SRC}" -o - | tar -C "/usr/local" -xzf -
 
-# Install the packages we'll need
-RUN apk add --no-cache \
-    texlive \
-    texlive-xetex \
-    texlive-luatex \
-    texmf-dist \
-    texmf-dist-latexextra \
-    texmf-dist-pictures \
-    texmf-dist-science \
-    texmf-dist-formatsextra
+#
+# Download and install texlive
+#
+RUN curl -L "${TEX_SRC}" -o - | tar -C "/tex-install" -xzf -
+
+WORKDIR "/tex-install"
+
+COPY texlive.profile ./
+RUN cd install-tl-* && perl install-tl -profile texlive.profile 
+
+#
+# Build the reporter
+#
+WORKDIR "${GOROOT}"
 
 RUN go get "${SRC}/cmd/grafana-reporter"
 RUN go install -v "${SRC}/cmd/grafana-reporter@v${VER}"
 RUN cp -vi "${GOPATH}/bin/grafana-reporter" "/usr/local/bin"
 
 #
-# Copy the executable over
+# Copy the main executable over
 #
 COPY /startup.sh /
 RUN chmod ug+rwx,o-rwx /startup.sh
