@@ -7,7 +7,7 @@ ARG ARCH="amd64"
 ARG OS="linux"
 ARG VER="2.3.1"
 ARG PKG="grafana-reporter"
-ARG SRC="github.com/IzakMarais/reporter/cmd/grafana-reporter"
+ARG SRC="github.com/IzakMarais/reporter"
 ARG GO_VER="1.16.7"
 ARG GO_SRC="https://golang.org/dl/go${GO_VER}.${OS}-${ARCH}.tar.gz"
 ARG TEX_SRC="https://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz"
@@ -38,19 +38,19 @@ RUN yum -y update && \
         perl-Digest-MD5
 
 #
+# Download and install texlive
+#
+WORKDIR "/tex-install"
+
+RUN curl -L "${TEX_SRC}" -o - | tar -xzf -
+COPY texlive.profile ./
+RUN cd install-tl-* && perl install-tl -profile "../texlive.profile" -no-gui
+RUN rm -rf "/tex-install"
+
+#
 # Download and install go
 #
 RUN curl -L "${GO_SRC}" -o - | tar -C "/usr/local" -xzf -
-
-#
-# Download and install texlive
-#
-RUN curl -L "${TEX_SRC}" -o - | tar -C "/tex-install" -xzf -
-
-WORKDIR "/tex-install"
-
-COPY texlive.profile ./
-RUN cd install-tl-* && perl install-tl -profile texlive.profile 
 
 #
 # Build the reporter
