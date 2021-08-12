@@ -1,4 +1,4 @@
-# texlive.profile written on Thu Aug 12 17:47:29 2021 UTC
+# texlive.profile written on Thu Aug 12 18:04:38 2021 UTC
 # It will NOT be updated and reflects only the
 # installation profile at installation time.
 selected_scheme scheme-custom
@@ -14,7 +14,6 @@ collection-basic 1
 collection-binextra 1
 collection-fontsextra 1
 collection-fontsrecommended 1
-collection-fontutils 1
 collection-formatsextra 1
 collection-langenglish 1
 collection-latex 1
@@ -27,7 +26,7 @@ collection-plaingeneric 1
 collection-xetex 1
 instopt_adjustpath 1
 instopt_adjustrepo 1
-instopt_letter 0
+instopt_letter 1
 instopt_portable 0
 instopt_write18_restricted 1
 tlpdbopt_autobackup 1
@@ -36,7 +35,7 @@ tlpdbopt_create_formats 1
 tlpdbopt_desktop_integration 1
 tlpdbopt_file_assocs 1
 tlpdbopt_generate_updmap 0
-tlpdbopt_install_docfiles 1
+tlpdbopt_install_docfiles 0
 tlpdbopt_install_srcfiles 0
 tlpdbopt_post_code 1
 tlpdbopt_sys_bin /usr/local/bin
