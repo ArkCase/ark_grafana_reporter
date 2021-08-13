@@ -29,7 +29,7 @@ ENV GOPATH="/go"
 ENV PATH="${PATH}:${GOROOT}/bin"
 
 #
-# Install the requisite packages for the build
+# Install the requisite packages for the build and runtime
 #
 RUN yum -y update && \
     yum -y install \
@@ -40,16 +40,6 @@ RUN yum -y update && \
         texlive-collection-latex \
         texlive-collection-latexrecommended \
         texlive-collection-xetex
-
-#
-# Download and install texlive
-#
-# WORKDIR "/tex-install"
-
-# RUN curl -L "${TEX_SRC}" -o - | tar -xzf -
-# COPY texlive.profile ./
-# RUN cd install-tl-* && perl install-tl -profile "../texlive.profile" -no-gui
-# RUN rm -rf "/tex-install"
 
 #
 # Download and install go
