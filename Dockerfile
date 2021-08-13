@@ -34,18 +34,22 @@ ENV PATH="${PATH}:${GOROOT}/bin"
 RUN yum -y update && \
     yum -y install \
         git \
-        perl-Tk \
-        perl-Digest-MD5
+        texlive-collection-basic \
+        texlive-collection-fontsrecommended \
+        texlive-collection-htmlxml \
+        texlive-collection-latex \
+        texlive-collection-latexrecommended \
+        texlive-collection-xetex
 
 #
 # Download and install texlive
 #
-WORKDIR "/tex-install"
+# WORKDIR "/tex-install"
 
-RUN curl -L "${TEX_SRC}" -o - | tar -xzf -
-COPY texlive.profile ./
-RUN cd install-tl-* && perl install-tl -profile "../texlive.profile" -no-gui
-RUN rm -rf "/tex-install"
+# RUN curl -L "${TEX_SRC}" -o - | tar -xzf -
+# COPY texlive.profile ./
+# RUN cd install-tl-* && perl install-tl -profile "../texlive.profile" -no-gui
+# RUN rm -rf "/tex-install"
 
 #
 # Download and install go
