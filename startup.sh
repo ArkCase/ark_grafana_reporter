@@ -45,13 +45,13 @@ PARAMS+=("-proto" "${SSL_PROTO}")
 if "${GRAFANA_SSL}" ; then
 	# -ssl-check
 	#       Check the SSL issuer and validity. Set this to false if your Grafana serves https using an unverified, self-signed certificate. (default true)
-	SSL_CHECK="${SSL_CHECK,,}"
-	case "${SSL_CHECK}" in
-		1 | y | yes | true | t | on ) SSL_CHECK="true" ;;
-		0 | n | no | false | f | off ) SSL_CHECK="false" ;;
-		* ) SSL_CHECK="true" ;;
+	GRAFANA_SSL_CHECK="${GRAFANA_SSL_CHECK,,}"
+	case "${GRAFANA_SSL_CHECK}" in
+		1 | y | yes | true | t | on ) GRAFANA_SSL_CHECK="true" ;;
+		0 | n | no | false | f | off ) GRAFANA_SSL_CHECK="false" ;;
+		* ) GRAFANA_SSL_CHECK="true" ;;
 	esac
-	PARAMS+=("-ssl-check" "${SSL_CHECK}")
+	PARAMS+=("-ssl-check" "${GRAFANA_SSL_CHECK}")
 fi
 
 say "Executing with parameters ${PARAMS[@]}"
