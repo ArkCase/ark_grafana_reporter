@@ -64,5 +64,4 @@ RUN chmod ug+rwx,o-rwx /startup.sh
 USER        ${UID}
 EXPOSE      8686
 VOLUME      [ "/templates" ]
-SHELL       [ "/bin/bash", "-c" ]
 ENTRYPOINT  [ "/startup.sh" ]
