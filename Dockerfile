@@ -11,7 +11,7 @@ ARG SRC="github.com/IzakMarais/reporter"
 ARG GO_VER="1.16.7"
 ARG GO_SRC="https://golang.org/dl/go${GO_VER}.${OS}-${ARCH}.tar.gz"
 ARG TEX_SRC="https://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz"
-ARG UID="root"
+ARG UID="grafana"
 
 #
 # Some important labels
@@ -20,6 +20,11 @@ LABEL ORG="Armedia LLC"
 LABEL MAINTAINER="Armedia Devops Team <devops@armedia.com>"
 LABEL APP="Grafana Reporter"
 LABEL VERSION="${VER}"
+
+#
+# Create the required user
+#
+RUN useradd --system --user-group "${UID}"
 
 #
 # Set the Go environment
