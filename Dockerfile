@@ -59,11 +59,14 @@ WORKDIR "${GOROOT}"
 RUN go get "${SRC}/cmd/grafana-reporter"
 RUN go install -v "${SRC}/cmd/grafana-reporter@v${VER}"
 RUN cp -vi "${GOPATH}/bin/grafana-reporter" "/usr/local/bin"
+RUN chown grafana: "/usr/local/bin/grafana-reporter"
+RUN chmod ug+rwx,o-rwx "/usr/local/bin/grafana-reporter"
 
 #
 # Copy the main executable over
 #
 COPY /startup.sh /
+RUN chown grafana:     /startup.sh
 RUN chmod ug+rwx,o-rwx /startup.sh
 
 USER        grafana
