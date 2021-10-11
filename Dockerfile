@@ -11,7 +11,7 @@ ARG SRC="github.com/IzakMarais/reporter"
 ARG GO_VER="1.16.7"
 ARG GO_SRC="https://golang.org/dl/go${GO_VER}.${OS}-${ARCH}.tar.gz"
 ARG TEX_SRC="https://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz"
-ARG UID="grafana"
+ARG UID="472"
 
 #
 # Some important labels
@@ -24,7 +24,7 @@ LABEL VERSION="${VER}"
 #
 # Create the required user
 #
-RUN useradd --system --user-group "${UID}"
+RUN useradd --system --uid ${UID} --user-group grafana
 
 #
 # Set the Go environment
@@ -66,7 +66,7 @@ RUN cp -vi "${GOPATH}/bin/grafana-reporter" "/usr/local/bin"
 COPY /startup.sh /
 RUN chmod ug+rwx,o-rwx /startup.sh
 
-USER        ${UID}
+USER        grafana
 EXPOSE      8686
 VOLUME      [ "/templates" ]
 ENTRYPOINT  [ "/startup.sh" ]
