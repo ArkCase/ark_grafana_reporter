@@ -69,7 +69,13 @@ COPY /startup.sh /
 RUN chown grafana:     /startup.sh
 RUN chmod ug+rwx,o-rwx /startup.sh
 
+RUN mkdir /work
+RUN chown grafana: "/work"
+RUN chmod ug+rwx,o-rwx "/work"
+WORKDIR "/work"
+
 USER        grafana
 EXPOSE      8686
 VOLUME      [ "/templates" ]
+VOLUME      [ "/work" ]
 ENTRYPOINT  [ "/startup.sh" ]
