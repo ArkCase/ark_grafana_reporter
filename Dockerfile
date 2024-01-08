@@ -1,4 +1,8 @@
-FROM 345280441424.dkr.ecr.ap-south-1.amazonaws.com/ark_base:latest
+ARG PUBLIC_REGISTRY="public.ecr.aws"
+ARG BASE_REPO="arkcase/base"
+ARG BASE_VER="8"
+ARG BASE_IMG="${PUBLIC_REGISTRY}/${BASE_REPO}:${BASE_VER}"
+FROM "${BASE_IMG}"
 
 #
 # Basic Parameters
